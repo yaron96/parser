@@ -16,12 +16,14 @@ export class TeamMemberService {
     return isEmpty;
   }
 
-  async getAll() {
-    const allTeamMembers = await this.teamMemberModel.find();
+  async getAll(firstName: string) {
+    const allTeamMembers = await this.teamMemberModel.find({
+      firstName: { $regex: firstName, $options: 'i' },
+    });
     return allTeamMembers;
   }
 
   async create(firstName: string, position: string, about: string) {
-    return this.teamMemberModel.create({firstName, position, about});
+    return this.teamMemberModel.create({ firstName, position, about });
   }
 }
